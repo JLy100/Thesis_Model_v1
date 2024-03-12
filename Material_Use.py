@@ -38,6 +38,10 @@ print("Population at each time step:")
 for i in range(len(t)):
     print(f"Year: {t[i]:.2f}, Population: {solution_pop[i][0]:.1f}")
 
+growth_at_each_step = np.diff(solution_pop.flatten())  # Taking the difference between consecutive population values
+
+print("Population growth at each time step:", growth_at_each_step)
+
 def Cement_use_MFH_dt(N_MFH_units, rate_MFH_change, M_concrete_use, share_MFH, t):
     """
     Model MFH cement use change
@@ -55,7 +59,7 @@ M_concrete_use = 408000000 #Concrete use in 2015
 share_MFH = 0.86 #Share of MFH units in total units
 
 #Solve the differential equation
-solution_MFH = odeint(Cement_use_MFH_dt, N_MFH_0, t, args=(rate_MFH_change, M_concrete_use, share_MFH))
+solution_MFH = odeint(Cement_use_MFH_dt, N_MFH_0, t, args=(rate_MFH_change, M_concrete_use, share_MFH,))
 
 # Plotting the solution
 def plot(rate_MFH_change):
@@ -68,6 +72,9 @@ def plot(rate_MFH_change):
     plt.show()
 
 plot(rate_MFH_change)
+
+Cement_use_MFH_at_each_time_step = np.diff(solution_MFH.flatten())  # Taking the difference between consecutive population values
+print("Cement use at each time step:", Cement_use_MFH_at_each_time_step)
 
 print("Cement use per capita at each time step:")
 for i in range(len(t)):
